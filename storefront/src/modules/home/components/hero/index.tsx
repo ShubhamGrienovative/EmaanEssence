@@ -65,7 +65,7 @@ const Hero = () => {
                 level="h1"
                 className="text-3xl leading-10 text-ui-fg-base font-normal"
               >
-                Well done! Your store is up and running
+                Well done! Emaan Essence is up and running
               </Heading>
               <Heading
                 level="h2"
