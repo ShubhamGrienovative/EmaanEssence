@@ -70,6 +70,9 @@ const medusaConfig = {
       resolve: './src/modules/logo',
     },
     {
+      resolve: './src/modules/test17oct',
+    },
+    {
       key: Modules.FILE,
       resolve: '@medusajs/file',
       options: {
