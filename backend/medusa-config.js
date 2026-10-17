@@ -64,6 +64,9 @@ const medusaConfig = {
   },
   modules: [
     {
+      resolve: './src/modules/hero-image',
+    },
+    {
       key: Modules.FILE,
       resolve: '@medusajs/file',
       options: {
