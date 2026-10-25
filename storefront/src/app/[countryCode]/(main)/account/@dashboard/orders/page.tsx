@@ -4,13 +4,21 @@ import OrderOverview from "@modules/account/components/order-overview"
 import { notFound } from "next/navigation"
 import { listOrders } from "@lib/data/orders"
 
+import { getCustomer } from "@lib/data/customer"
+
 export const metadata: Metadata = {
   title: "Orders",
   description: "Overview of your previous orders.",
 }
 
 export default async function Orders() {
-  const orders = await listOrders()
+  const customer = await getCustomer().catch(() => null)
+
+  if (!customer) {
+    notFound()
+  }
+
+  const orders = await listOrders().catch(() => null)
 
   if (!orders) {
     notFound()

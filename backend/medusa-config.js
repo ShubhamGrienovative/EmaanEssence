@@ -25,7 +25,10 @@ import {
   S3_FORCE_PATH_STYLE,
   S3_ACL,
   MEILISEARCH_HOST,
-  MEILISEARCH_ADMIN_KEY
+  MEILISEARCH_ADMIN_KEY,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_CALLBACK_URL
 } from 'lib/constants';
 
 loadEnv(process.env.NODE_ENV, process.cwd());
@@ -50,7 +53,11 @@ const medusaConfig = {
       authCors: AUTH_CORS,
       storeCors: STORE_CORS,
       jwtSecret: JWT_SECRET,
-      cookieSecret: COOKIE_SECRET
+      cookieSecret: COOKIE_SECRET,
+      authMethodsPerActor: {
+        user: ['emailpass'],
+        customer: ['emailpass', 'google'],
+      },
     },
     build: {
       rollupOptions: {
@@ -71,6 +78,27 @@ const medusaConfig = {
     },
     {
       resolve: './src/modules/test17oct',
+    },
+    {
+      key: Modules.AUTH,
+      resolve: '@medusajs/medusa/auth',
+      options: {
+        providers: [
+          {
+            resolve: '@medusajs/auth-emailpass',
+            id: 'emailpass',
+          },
+          ...(GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET ? [{
+            resolve: '@medusajs/auth-google',
+            id: 'google',
+            options: {
+              clientId: GOOGLE_CLIENT_ID,
+              clientSecret: GOOGLE_CLIENT_SECRET,
+              callbackUrl: GOOGLE_CALLBACK_URL,
+            },
+          }] : []),
+        ],
+      },
     },
     {
       key: Modules.FILE,

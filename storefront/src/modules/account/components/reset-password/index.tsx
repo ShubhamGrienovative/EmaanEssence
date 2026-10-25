@@ -100,7 +100,7 @@ const ResetPassword = ({ token, email }: Props) => {
 
         <SubmitButton
           data-testid="reset-password-button"
-          className="w-full mt-6"
+          className="w-full mt-6 btn-gold-gradient rounded-xl py-3 text-small-semi"
         >
           Save new password
         </SubmitButton>

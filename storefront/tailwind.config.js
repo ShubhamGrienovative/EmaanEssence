@@ -32,6 +32,11 @@ module.exports = {
           80: "#1F2937",
           90: "#111827",
         },
+        gold: {
+          light: "#deb868",
+          DEFAULT: "#c99c48",
+          dark: "#b58838",
+        },
       },
       borderRadius: {
         none: "0px",

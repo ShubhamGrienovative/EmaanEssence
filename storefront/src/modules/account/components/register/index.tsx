@@ -6,9 +6,9 @@ import Input from "@modules/common/components/input"
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
+import GoogleButton from "@modules/account/components/google-button"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { signup } from "@lib/data/customer"
-import { getStoreName } from "@lib/util/env"
 
 type Props = {
   setCurrentView: (view: LOGIN_VIEW) => void
@@ -18,33 +18,34 @@ const Register = ({ setCurrentView }: Props) => {
   const [message, formAction] = useActionState(signup, null)
 
   return (
-    <div
-      className="max-w-sm flex flex-col items-center"
-      data-testid="register-page"
-    >
-      <h1 className="text-large-semi uppercase mb-6">
-        Become a {getStoreName()} Member
-      </h1>
-      <p className="text-center text-base-regular text-ui-fg-base mb-4">
-        Create your {getStoreName()} Member profile, and get access to an enhanced
-        shopping experience.
-      </p>
+    <div className="w-full flex flex-col items-center" data-testid="register-page">
+      <div className="text-center mb-5">
+        <h2 className="text-xl font-medium tracking-tight text-stone-900">
+          Become a Member
+        </h2>
+        <p className="text-small-regular text-stone-500 mt-1">
+          Unlock exclusive bespoke fragrance privileges and order tracking.
+        </p>
+      </div>
+
       <form className="w-full flex flex-col" action={formAction}>
-        <div className="flex flex-col w-full gap-y-2">
-          <Input
-            label="First name"
-            name="first_name"
-            required
-            autoComplete="given-name"
-            data-testid="first-name-input"
-          />
-          <Input
-            label="Last name"
-            name="last_name"
-            required
-            autoComplete="family-name"
-            data-testid="last-name-input"
-          />
+        <div className="flex flex-col w-full gap-y-3">
+          <div className="grid grid-cols-2 gap-x-2">
+            <Input
+              label="First name"
+              name="first_name"
+              required
+              autoComplete="given-name"
+              data-testid="first-name-input"
+            />
+            <Input
+              label="Last name"
+              name="last_name"
+              required
+              autoComplete="family-name"
+              data-testid="last-name-input"
+            />
+          </div>
           <Input
             label="Email"
             name="email"
@@ -69,38 +70,58 @@ const Register = ({ setCurrentView }: Props) => {
             data-testid="password-input"
           />
         </div>
+
         <ErrorMessage error={message} data-testid="register-error" />
-        <span className="text-center text-ui-fg-base text-small-regular mt-6">
-          By creating an account, you agree to {getStoreName()}&apos;s{" "}
+
+        <p className="text-center text-stone-500 text-xsmall-regular mt-4 leading-relaxed">
+          By joining, you agree to our{" "}
           <LocalizedClientLink
             href="/content/privacy-policy"
-            className="underline"
+            className="text-stone-800 underline underline-offset-2 hover:text-[#c59b27] transition-colors"
           >
             Privacy Policy
           </LocalizedClientLink>{" "}
           and{" "}
           <LocalizedClientLink
             href="/content/terms-of-use"
-            className="underline"
+            className="text-stone-800 underline underline-offset-2 hover:text-[#c59b27] transition-colors"
           >
             Terms of Use
           </LocalizedClientLink>
           .
-        </span>
-        <SubmitButton className="w-full mt-6" data-testid="register-button">
-          Join
+        </p>
+
+        <SubmitButton
+          className="w-full mt-5 btn-gold-gradient rounded-xl py-3 text-small-semi"
+          data-testid="register-button"
+        >
+          Create Member Profile
         </SubmitButton>
       </form>
-      <span className="text-center text-ui-fg-base text-small-regular mt-6">
-        Already a member?{" "}
+
+      <div className="w-full flex items-center my-5">
+        <div className="flex-1 border-t border-stone-200/80" />
+        <span className="px-3 text-[11px] tracking-wider uppercase text-stone-400 font-medium">
+          OR
+        </span>
+        <div className="flex-1 border-t border-stone-200/80" />
+      </div>
+
+      <GoogleButton
+        text="Sign up with Google"
+        data-testid="google-sign-up-button"
+      />
+
+      <p className="text-center text-stone-500 text-small-regular mt-6">
+        Already have an account?{" "}
         <button
+          type="button"
           onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
-          className="underline"
+          className="text-stone-900 font-medium underline underline-offset-4 hover:text-[#c59b27] transition-colors"
         >
           Sign in
         </button>
-        .
-      </span>
+      </p>
     </div>
   )
 }

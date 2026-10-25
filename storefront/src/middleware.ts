@@ -28,10 +28,12 @@ const CACHE_ID_COOKIE_OPTIONS = {
 
 async function getRegionMap() {
   const { regionMap, regionMapUpdated } = regionMapCache
+  const isDev = process.env.NODE_ENV === "development"
 
   if (
     !regionMap.keys().next().value ||
-    regionMapUpdated < Date.now() - 3600 * 1000
+    regionMapUpdated < Date.now() - 3600 * 1000 ||
+    isDev
   ) {
     // Fetch regions from Medusa. We can't use the JS client here because middleware is running on Edge and the client needs a Node environment.
     const { regions } = await fetch(`${BACKEND_URL}/store/regions`, {
@@ -39,13 +41,17 @@ async function getRegionMap() {
         "x-publishable-api-key": PUBLISHABLE_API_KEY!,
       },
       next: {
-        revalidate: 3600,
+        revalidate: isDev ? 0 : 3600,
         tags: ["regions"],
       },
     }).then((res) => res.json())
 
     if (!regions?.length) {
       notFound()
+    }
+
+    if (isDev) {
+      regionMapCache.regionMap.clear()
     }
 
     // Create a map of country codes to regions.

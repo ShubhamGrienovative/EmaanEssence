@@ -18,6 +18,12 @@ importers:
       '@medusajs/admin-shared':
         specifier: 2.19.0
         version: 2.19.0
+      '@medusajs/auth-emailpass':
+        specifier: 2.19.0
+        version: 2.19.0(@medusajs/framework@2.19.0(@medusajs/cli@2.19.0(@types/node@22.19.1))(@types/node@22.19.1)(ioredis@5.8.2)(vite@7.3.6(@types/node@22.19.1)(jiti@1.21.7)(yaml@2.9.0))(zod@4.2.0))
+      '@medusajs/auth-google':
+        specifier: 2.19.0
+        version: 2.19.0(@medusajs/framework@2.19.0(@medusajs/cli@2.19.0(@types/node@22.19.1))(@types/node@22.19.1)(ioredis@5.8.2)(vite@7.3.6(@types/node@22.19.1)(jiti@1.21.7)(yaml@2.9.0))(zod@4.2.0))
       '@medusajs/cli':
         specifier: 2.19.0
         version: 2.19.0(@types/node@22.19.1)
@@ -12430,7 +12436,7 @@ snapshots:
   '@types/jsonwebtoken@9.0.10':
     dependencies:
       '@types/ms': 2.1.0
-      '@types/node': 20.19.25
+      '@types/node': 22.19.1
 
   '@types/mime@1.3.5': {}
 

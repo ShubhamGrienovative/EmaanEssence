@@ -1,6 +1,8 @@
 import { Suspense } from "react"
+import Image from "next/image"
 
 import { listRegions } from "@lib/data/regions"
+import { getCustomer } from "@lib/data/customer"
 import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
@@ -8,7 +10,10 @@ import SideMenu from "@modules/layout/components/side-menu"
 import { getStoreName, isSearchEnabled } from "@lib/util/env"
 
 export default async function Nav() {
-  const regions = await listRegions().then((regions: StoreRegion[]) => regions)
+  const [regions, customer] = await Promise.all([
+    listRegions().then((regions: StoreRegion[]) => regions),
+    getCustomer().catch(() => null),
+  ])
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
@@ -23,10 +28,19 @@ export default async function Nav() {
           <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              className="flex items-center gap-x-2.5 hover:opacity-90 transition-opacity"
               data-testid="nav-store-link"
             >
-              {getStoreName()}
+              <Image
+                src="/images/emaan-essence-logo.jpg"
+                alt="Emaan Essence Logo"
+                width={36}
+                height={36}
+                className="w-9 h-9 object-contain rounded-md"
+              />
+              <span className="txt-compact-large-plus uppercase tracking-wider text-stone-900 font-medium">
+                {getStoreName()}
+              </span>
             </LocalizedClientLink>
           </div>
 
@@ -47,7 +61,7 @@ export default async function Nav() {
                 href="/account"
                 data-testid="nav-account-link"
               >
-                Account
+                {customer?.first_name ? `Hi, ${customer.first_name}` : "Account"}
               </LocalizedClientLink>
             </div>
             <Suspense

@@ -1,4 +1,4 @@
-﻿"use server"
+"use server"
 
 import { sdk } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
@@ -58,7 +58,12 @@ export async function signup(_currentState: unknown, formData: FormData) {
     const customHeaders = { authorization: `Bearer ${token}` }
     
     const { customer: createdCustomer } = await sdk.store.customer.create(
-      customerForm,
+      {
+        ...customerForm,
+        metadata: {
+          is_profile_completed: false,
+        },
+      },
       {},
       customHeaders
     )
@@ -263,4 +268,27 @@ export const updateCustomerAddress = async (
     .catch((err) => {
       return { success: false, error: err.toString() }
     })
+}
+
+export async function getGoogleAuthUrl(): Promise<{
+  url: string | null
+  error: string | null
+}> {
+  try {
+    const result = await sdk.auth.login("customer", "google", {})
+    if (typeof result === "object" && result && "location" in result) {
+      return { url: (result as { location: string }).location, error: null }
+    }
+    return { url: null, error: "Unable to retrieve Google login URL." }
+  } catch (error: any) {
+    return { url: null, error: error.message || error.toString() }
+  }
+}
+
+export async function setProfileCompleted(isCompleted: boolean = true) {
+  return await updateCustomer({
+    metadata: {
+      is_profile_completed: isCompleted,
+    },
+  })
 }

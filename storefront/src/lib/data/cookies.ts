@@ -50,7 +50,11 @@ export const getCacheTag = async (tag: string): Promise<string> => {
  */
 export const getCacheDirectives = async (
   tag: string
-): Promise<{} | { cache: "force-cache"; next: { tags: string[] } }> => {
+): Promise<{} | { cache: "no-store" } | { cache: "force-cache"; next: { tags: string[] } }> => {
+  if (process.env.NODE_ENV === "development") {
+    return { cache: "no-store" }
+  }
+
   const cacheTag = await getCacheTag(tag)
 
   if (!cacheTag) {

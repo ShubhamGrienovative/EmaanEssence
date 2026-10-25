@@ -20,72 +20,90 @@ const ForgotPassword = ({ setCurrentView }: Props) => {
 
   return (
     <div
-      className="max-w-sm w-full flex flex-col items-center"
+      className="w-full flex flex-col items-center"
       data-testid="forgot-password-page"
     >
-      <h1 className="text-large-semi uppercase mb-6">Reset your password</h1>
+      <div className="text-center mb-5">
+        <h2 className="text-xl font-medium tracking-tight text-stone-900">
+          Reset Password
+        </h2>
+        <p className="text-small-regular text-stone-500 mt-1">
+          Enter your email to receive a secure recovery link.
+        </p>
+      </div>
 
       {state.success ? (
-        <>
-          {/*
-            Deliberately does not confirm that an account exists. The backend
-            answers the same way for an unknown address so the form cannot be
-            used to find out who has an account here, and saying "check your
-            inbox" would undo that on the very next line.
-          */}
+        <div className="flex flex-col items-center text-center py-4">
+          <div className="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3 shadow-sm">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
           <p
-            className="text-center text-base-regular text-ui-fg-base mb-8"
+            className="text-small-regular text-stone-600 mb-6 leading-relaxed max-w-xs"
             data-testid="forgot-password-sent"
           >
             If an account exists for that address, a link to set a new password
-            is on its way. It can be used once and expires in 15 minutes.
+            has been sent. It can be used once and expires in 15 minutes.
           </p>
           <button
+            type="button"
             onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
-            className="underline text-small-regular"
+            className="w-full btn-gold-gradient rounded-xl py-2.5 text-small-semi"
             data-testid="back-to-sign-in-button"
           >
-            Back to sign in
+            Return to Sign In
           </button>
-        </>
+        </div>
       ) : (
         <>
-          <p className="text-center text-base-regular text-ui-fg-base mb-8">
-            Enter the email address on your account and we will send you a link
-            to set a new password.
-          </p>
           <form className="w-full" action={formAction}>
-            <Input
-              label="Email"
-              name="email"
-              type="email"
-              title="Enter a valid email address."
-              autoComplete="email"
-              required
-              data-testid="forgot-password-email-input"
-            />
+            <div className="flex flex-col w-full gap-y-3">
+              <Input
+                label="Email"
+                name="email"
+                type="email"
+                title="Enter a valid email address."
+                autoComplete="email"
+                required
+                data-testid="forgot-password-email-input"
+              />
+            </div>
+
             <ErrorMessage
               error={state.error}
               data-testid="forgot-password-error-message"
             />
+
             <SubmitButton
               data-testid="send-reset-link-button"
-              className="w-full mt-6"
+              className="w-full mt-5 btn-gold-gradient rounded-xl py-3 text-small-semi"
             >
-              Send reset link
+              Send Reset Link
             </SubmitButton>
           </form>
-          <span className="text-center text-ui-fg-base text-small-regular mt-6">
-            Remembered it?{" "}
+
+          <p className="text-center text-stone-500 text-small-regular mt-6">
+            Remembered your password?{" "}
             <button
+              type="button"
               onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
-              className="underline"
+              className="text-stone-900 font-medium underline underline-offset-4 hover:text-[#c59b27] transition-colors"
               data-testid="back-to-sign-in-button"
             >
               Sign in
             </button>
-            .
-          </span>
+          </p>
         </>
       )}
     </div>

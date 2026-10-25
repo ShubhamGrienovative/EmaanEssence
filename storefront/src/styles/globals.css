@@ -109,4 +109,26 @@
   .text-3xl-semi {
     @apply text-[32px] leading-[44px] font-semibold;
   }
+
+  .btn-gold-gradient {
+    background: linear-gradient(135deg, #c99c48 0%, #e2be75 50%, #c99c48 100%) !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(110, 80, 20, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 4px 16px 0 rgba(201, 156, 72, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.45) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.025em !important;
+  }
+
+  .btn-gold-gradient:hover {
+    background: linear-gradient(135deg, #d4a851 0%, #ebd08d 50%, #c99c48 100%) !important;
+    box-shadow: 0 6px 24px 0 rgba(201, 156, 72, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6) !important;
+    transform: translateY(-1px);
+  }
+
+  .btn-gold-gradient:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px 0 rgba(201, 156, 72, 0.3), inset 0 1px 1px 0 rgba(0, 0, 0, 0.1) !important;
+  }
 }
